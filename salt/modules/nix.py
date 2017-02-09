@@ -168,10 +168,9 @@ def install(*pkgs, **kwargs):
 
     out = _run(cmd)
 
-    installs = list(itertools.chain.from_iterable(
-        [s.split()[1:] for s in out['stderr'].splitlines()
-         if s.startswith('installing')]
-        ))
+    installs = list(itertools.chain(
+        *[s.split()[1:] for s in out['stderr'].splitlines()
+          if s.startswith('installing')]))
 
     return [_strip_quotes(s) for s in installs]
 
